@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170326203004) do
+ActiveRecord::Schema.define(version: 20170619193245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,40 @@ ActiveRecord::Schema.define(version: 20170326203004) do
     t.index ["uid", "provider"], name: "index_admins_on_uid_and_provider", unique: true, using: :btree
   end
 
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+  end
+
+  create_table "recipes", force: :cascade do |t|
+    t.string   "title"
+    t.string   "summary"
+    t.text     "image"
+    t.integer  "time"
+    t.integer  "porsion"
+    t.string   "complexity"
+    t.string   "slug"
+    t.integer  "calories",      default: 0
+    t.integer  "proteins",      default: 0
+    t.integer  "fats",          default: 0
+    t.integer  "carbohydrates"
+    t.datetime "publish"
+    t.integer  "rating",        default: 0
+    t.integer  "user_id"
+    t.boolean  "approved",      default: true
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["slug"], name: "index_recipes_on_slug", unique: true, using: :btree
+    t.index ["user_id"], name: "index_recipes_on_user_id", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "provider",               default: "email", null: false
     t.string   "uid",                    default: "",      null: false
@@ -73,4 +107,5 @@ ActiveRecord::Schema.define(version: 20170326203004) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
   end
 
+  add_foreign_key "recipes", "users"
 end

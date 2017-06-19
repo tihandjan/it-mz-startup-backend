@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       mount_devise_token_auth_for 'Admin', at: 'admin/auth'
       mount_devise_token_auth_for 'User', at: 'user/auth'
-
+      resources :recipies
     end
   end
 end
