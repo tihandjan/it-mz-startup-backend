@@ -67,13 +67,13 @@ ActiveRecord::Schema.define(version: 20170619193245) do
     t.integer  "calories",      default: 0
     t.integer  "proteins",      default: 0
     t.integer  "fats",          default: 0
-    t.integer  "carbohydrates"
+    t.integer  "carbohydrates", default: 0
     t.datetime "publish"
     t.integer  "rating",        default: 0
     t.integer  "user_id"
-    t.boolean  "approved",      default: true
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.boolean  "approved",      default: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.index ["slug"], name: "index_recipes_on_slug", unique: true, using: :btree
     t.index ["user_id"], name: "index_recipes_on_user_id", using: :btree
   end

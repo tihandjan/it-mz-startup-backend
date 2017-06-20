@@ -20,6 +20,10 @@ gem 'rack-cors'
 # routing
 gem 'friendly_id', '~> 5.1.0'
 
+# working with images
+gem 'carrierwave'
+gem "mini_magick"
+
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'rspec-rails'

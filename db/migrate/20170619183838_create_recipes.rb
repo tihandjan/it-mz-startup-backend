@@ -11,7 +11,7 @@ class CreateRecipes < ActiveRecord::Migration[5.0]
       t.integer :calories, default: 0
       t.integer :proteins, default: 0
       t.integer :fats, default: 0
-      t.integer :carbohydrates, defaults: 0
+      t.integer :carbohydrates, default: 0
       t.datetime :publish
       t.integer :rating, default: 0
       t.references :user, foreign_key: true
