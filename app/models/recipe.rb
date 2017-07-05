@@ -5,14 +5,14 @@ class Recipe < ApplicationRecord
       slug.blank? || title_changed?
   end
   belongs_to :user
-
-  validates :title, presence: true, length: { minimum: 5, maximum: 120 }
-  validates :summary, length: { minimum: 5, maximum: 180 }
-  validates :image, presence: true
-  validates :time, presence: true
-  validates :porsion, presence: true
-  validates :complexity, presence: true
-  validates :publish, presence: true
+  belongs_to :admin
+#  validates :title, presence: true, length: { minimum: 5, maximum: 120 }
+#  validates :summary, length: { minimum: 5, maximum: 180 }
+#  validates :image, presence: true
+#  validates :time, presence: true
+#  validates :porsion, presence: true
+#  validates :complexity, presence: true
+#  validates :publish, presence: true
 
   mount_uploader :image, RecipeImageUploader
 end
