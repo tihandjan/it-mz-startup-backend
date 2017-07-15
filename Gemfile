@@ -23,6 +23,7 @@ gem 'friendly_id', '~> 5.1.0'
 # working with images
 gem 'carrierwave'
 gem "mini_magick"
+gem 'carrierwave-base64'
 
 group :development, :test do
   gem 'byebug', platform: :mri

@@ -14,21 +14,13 @@ class Api::V1::RecipesController < ApplicationController
 
   # POST /api/v1/recipies
   def create
-    @recipe = Recipe.new do |recipe|
-      recipe.title = params[:title]
-      recipe.summary = params[:summary]
-      recipe.time = params[:time]
-      recipe.image = params[:file]
-      recipe.publish = params[:publish]
-      recipe.porsion = params[:porsion]
-      recipe.complexity = params[:complexity]
+    @recipe = Recipe.new recipe_params
       if current_api_v1_user
-        recipe.user_id = current_api_v1_user.id
+        @recipe.user_id = current_api_v1_user.id
       elsif current_api_v1_admin
-        recipe.admin_id = current_api_v1_admin.id
-        recipe.user_type = 'admin'
+        @recipe.admin_id = current_api_v1_admin.id
+        @recipe.user_type = 'admin'
       end
-    end
     if @recipe.save
       render json: @recipe, status: :created
     else
@@ -58,6 +50,6 @@ class Api::V1::RecipesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def recipe_params
-      recipe = params.require(:recipe).permit(:title, :file, :summary, :time, :portion, :complexity, :publish)
+      params.require(:recipe).permit(:title, :image, :summary, :time, :porsion, :complexity, :publish)
     end
 end
