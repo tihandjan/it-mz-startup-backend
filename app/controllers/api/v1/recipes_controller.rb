@@ -22,6 +22,13 @@ class Api::V1::RecipesController < ApplicationController
         @recipe.user_type = 'admin'
       end
     if @recipe.save
+      params[:steps].each do |step|
+        @recipe.steps.create do |st|
+	  st.step = step[:step]
+	  st.image = step[:image]
+   	  st.content = step[:content]
+        end
+      end
       render json: @recipe, status: :created
     else
       render json: @recipe.errors, status: :unprocessable_entity
@@ -50,6 +57,6 @@ class Api::V1::RecipesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def recipe_params
-      params.require(:recipe).permit(:title, :image, :summary, :time, :porsion, :complexity, :publish)
+      params.require(:recipe).permit(:title, :image, :summary, :time, :porsion, :complexity, :publish, steps: [:image, :step, :content, :id])
     end
 end
