@@ -9,7 +9,7 @@ class Recipe < ApplicationRecord
   has_many :steps, dependent: :destroy
   validates :title, presence: true, length: { minimum: 5, maximum: 120 }
   validates :summary, length: { minimum: 5, maximum: 180 }
-#  validates :image, presence: true
+  validates :image, presence: true
   validates :time, presence: true
   validates :porsion, presence: true
   validates :complexity, presence: true
