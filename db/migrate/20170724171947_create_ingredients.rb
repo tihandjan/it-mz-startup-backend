@@ -6,6 +6,7 @@ class CreateIngredients < ActiveRecord::Migration[5.0]
       t.integer :fats, default: 0
       t.integer :proteins, default: 0
       t.integer :carbohydrates, default: 0
+      t.string :image
 
       t.timestamps
     end

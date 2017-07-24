@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :recipes
       mount_devise_token_auth_for 'Admin', at: 'admin/auth'
       mount_devise_token_auth_for 'User', at: 'user/auth'
+      resources :ingredients, only: [:index, :create]
     end
   end
 end

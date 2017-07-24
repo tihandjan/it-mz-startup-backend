@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20170724172326) do
     t.integer  "fats",          default: 0
     t.integer  "proteins",      default: 0
     t.integer  "carbohydrates", default: 0
+    t.string   "image"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end
