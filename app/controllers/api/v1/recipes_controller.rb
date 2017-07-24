@@ -24,9 +24,9 @@ class Api::V1::RecipesController < ApplicationController
     if @recipe.save
       params[:steps].each do |step|
         @recipe.steps.create do |st|
-	  st.step = step[:step]
-	  st.image = step[:image]
-   	  st.content = step[:content]
+          st.step = step[:step]
+	        st.image = step[:image]
+   	      st.content = step[:content]
         end
       end
       render json: @recipe, status: :created

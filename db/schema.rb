@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170715143240) do
+ActiveRecord::Schema.define(version: 20170724172326) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,16 @@ ActiveRecord::Schema.define(version: 20170715143240) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
   end
 
+  create_table "ingredients", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "calories",      default: 0
+    t.integer  "fats",          default: 0
+    t.integer  "proteins",      default: 0
+    t.integer  "carbohydrates", default: 0
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
   create_table "recipes", force: :cascade do |t|
     t.string   "title"
     t.string   "summary"
@@ -79,6 +89,17 @@ ActiveRecord::Schema.define(version: 20170715143240) do
     t.index ["admin_id"], name: "index_recipes_on_admin_id", using: :btree
     t.index ["slug"], name: "index_recipes_on_slug", unique: true, using: :btree
     t.index ["user_id"], name: "index_recipes_on_user_id", using: :btree
+  end
+
+  create_table "recipes_ingredients", force: :cascade do |t|
+    t.integer  "recipe_id"
+    t.integer  "ingredient_id"
+    t.integer  "amount"
+    t.string   "unit",          default: "gramm"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.index ["ingredient_id"], name: "index_recipes_ingredients_on_ingredient_id", using: :btree
+    t.index ["recipe_id"], name: "index_recipes_ingredients_on_recipe_id", using: :btree
   end
 
   create_table "steps", force: :cascade do |t|
@@ -122,5 +143,7 @@ ActiveRecord::Schema.define(version: 20170715143240) do
 
   add_foreign_key "recipes", "admins"
   add_foreign_key "recipes", "users"
+  add_foreign_key "recipes_ingredients", "ingredients"
+  add_foreign_key "recipes_ingredients", "recipes"
   add_foreign_key "steps", "recipes"
 end
