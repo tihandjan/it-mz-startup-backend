@@ -35,6 +35,7 @@ class Api::V1::RecipesController < ApplicationController
           ing.unit = ingredient[:unit]
         end
       end
+      end
       if @recipe.save
         render json: @recipe, status: :created
       else
