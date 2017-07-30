@@ -18,7 +18,7 @@ class Api::V1::IngredientsController < ApplicationController
   private
 
     def ingredient_params
-      params.require(:ingredient).permit(:name, :fats, :proteins, :carbohydrates, :calories)
+      params.require(:ingredient).permit(:name, :fats, :proteins, :carbohydrates, :calories, :image)
     end
 
 end

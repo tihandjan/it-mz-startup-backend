@@ -6,6 +6,9 @@ class Recipe < ApplicationRecord
   end
   belongs_to :user
   belongs_to :admin
+  belongs_to :category
+  belongs_to :sub_category
+  belongs_to :country
   has_many :steps, dependent: :destroy
   has_many :recipes_ingredients, dependent: :destroy
   has_many :ingredients, through: :recipes_ingredients
@@ -19,7 +22,6 @@ class Recipe < ApplicationRecord
   validate :validate_complexity
 
   mount_base64_uploader :image, RecipeImageUploader
-  accepts_nested_attributes_for :steps, allow_destroy: true
 
   def validate_complexity
     errors[:complexity] = 'Выберите уровень сложность' if complexity == 'Сложность готовки'

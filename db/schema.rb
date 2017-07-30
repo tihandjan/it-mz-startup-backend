@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724172326) do
+ActiveRecord::Schema.define(version: 20170730000253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,18 @@ ActiveRecord::Schema.define(version: 20170724172326) do
     t.index ["uid", "provider"], name: "index_admins_on_uid_and_provider", unique: true, using: :btree
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "countries", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
     t.integer  "sluggable_id",              null: false
@@ -75,20 +87,26 @@ ActiveRecord::Schema.define(version: 20170724172326) do
     t.integer  "porsion"
     t.string   "complexity"
     t.string   "slug"
-    t.integer  "calories",      default: 0
-    t.integer  "proteins",      default: 0
-    t.integer  "fats",          default: 0
-    t.integer  "carbohydrates", default: 0
+    t.integer  "calories",        default: 0
+    t.integer  "proteins",        default: 0
+    t.integer  "fats",            default: 0
+    t.integer  "carbohydrates",   default: 0
     t.datetime "publish"
-    t.integer  "rating",        default: 0
+    t.integer  "rating",          default: 0
     t.integer  "user_id"
-    t.boolean  "approved",      default: false
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.boolean  "approved",        default: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.integer  "admin_id"
-    t.string   "user_type",     default: "user"
+    t.string   "user_type",       default: "user"
+    t.integer  "country_id"
+    t.integer  "category_id"
+    t.integer  "sub_category_id"
     t.index ["admin_id"], name: "index_recipes_on_admin_id", using: :btree
+    t.index ["category_id"], name: "index_recipes_on_category_id", using: :btree
+    t.index ["country_id"], name: "index_recipes_on_country_id", using: :btree
     t.index ["slug"], name: "index_recipes_on_slug", unique: true, using: :btree
+    t.index ["sub_category_id"], name: "index_recipes_on_sub_category_id", using: :btree
     t.index ["user_id"], name: "index_recipes_on_user_id", using: :btree
   end
 
@@ -111,6 +129,14 @@ ActiveRecord::Schema.define(version: 20170724172326) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["recipe_id"], name: "index_steps_on_recipe_id", using: :btree
+  end
+
+  create_table "sub_categories", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "category_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["category_id"], name: "index_sub_categories_on_category_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -143,8 +169,12 @@ ActiveRecord::Schema.define(version: 20170724172326) do
   end
 
   add_foreign_key "recipes", "admins"
+  add_foreign_key "recipes", "categories"
+  add_foreign_key "recipes", "countries"
+  add_foreign_key "recipes", "sub_categories"
   add_foreign_key "recipes", "users"
   add_foreign_key "recipes_ingredients", "ingredients"
   add_foreign_key "recipes_ingredients", "recipes"
   add_foreign_key "steps", "recipes"
+  add_foreign_key "sub_categories", "categories"
 end
