@@ -2,7 +2,7 @@ class Api::V1::RecipesController < ApplicationController
   before_action :set_recipe, only: [:show, :update, :destroy]
 
   def index
-    @recipies = Recipe.all
+    @recipies = Recipe.all.order(created_at: :desc)
 
     render json: @recipies
   end
@@ -60,7 +60,7 @@ class Api::V1::RecipesController < ApplicationController
     end
 
     def recipe_params
-      params.require(:recipe).permit(:title, :image, :summary, :time, :porsion, :complexity, :publish, :category_id, :sub_category_id, :country)
+      params.require(:recipe).permit(:title, :image, :summary, :time, :porsion, :complexity, :publish, :category_id, :sub_category_id, :country_id)
     end
 
 end
