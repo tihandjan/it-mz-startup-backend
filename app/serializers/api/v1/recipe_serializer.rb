@@ -1,5 +1,5 @@
 class Api::V1::RecipeSerializer < ActiveModel::Serializer
-  attributes :id, :title, :summary, :created_at, :image, :complexity, :time, :porsion, :calories, :rating
+  attributes :id, :title, :summary, :created_at, :image, :complexity, :time, :porsion, :calories, :rating, :slug
   has_one :user
   has_one :country
   has_one :category

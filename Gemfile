@@ -19,6 +19,7 @@ gem 'rack-cors'
 
 # routing
 gem 'friendly_id', '~> 5.1.0'
+gem 'russian'
 
 # working with images
 gem 'carrierwave'
