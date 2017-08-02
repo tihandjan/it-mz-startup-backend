@@ -25,6 +25,7 @@ gem 'russian'
 gem 'carrierwave'
 gem "mini_magick"
 gem 'carrierwave-base64'
+gem 'carrierwave-aws'
 
 group :development, :test do
   gem 'byebug', platform: :mri
