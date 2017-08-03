@@ -60,10 +60,7 @@ class Api::V1::RecipesController < ApplicationController
     end
 
     def recipe_params
-      recipe = params.require(:recipe).permit(:title, :image, :summary, :time, :porsion, :complexity, :publish, :category_id)
-      recipe[:sub_category_id] = params[:sub_category_id] unless SubCategory.find_by_id(params[:sub_category_id]).blank?
-      recipe[:country_id] = params[:country_id] unless Country.find_by_id(params[:country_id]).blank?
-      recipe
+      params.require(:recipe).permit(:title, :image, :summary, :time, :porsion, :complexity, :publish, :category_id, :sub_category_id, :country_id)
     end
 
 end
