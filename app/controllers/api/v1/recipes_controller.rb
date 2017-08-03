@@ -60,8 +60,9 @@ class Api::V1::RecipesController < ApplicationController
     end
 
     def recipe_params
-      recipe = params.require(:recipe).permit(:title, :image, :summary, :time, :porsion, :complexity, :publish, :category_id, :country_id)
+      recipe = params.require(:recipe).permit(:title, :image, :summary, :time, :porsion, :complexity, :publish, :category_id)
       recipe[:sub_category_id] = params[:sub_category_id] unless params[:sub_category_id].to_i == 0
+      recipe[:country_id] = params[:country_id] unless params[:country_id] == 'Кухня какой страны'
       recipe
     end
 
