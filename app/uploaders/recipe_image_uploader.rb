@@ -26,6 +26,10 @@ class RecipeImageUploader < CarrierWave::Uploader::Base
     process :resize_to_fill => [230, 230]
   end
 
+  version :show do
+    process :resize_to_fill => [700, 420]
+  end
+
   def extension_whitelist
     %w(jpg jpeg gif png)
   end

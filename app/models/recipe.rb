@@ -13,7 +13,7 @@ class Recipe < ApplicationRecord
   has_many :recipes_ingredients, dependent: :destroy
   has_many :ingredients, through: :recipes_ingredients
   validates :title, presence: true, length: { minimum: 5, maximum: 120 }
-  validates :summary, length: { minimum: 5, maximum: 180 }
+  validates :summary, length: { minimum: 5, maximum: 500 }
   validates :image, presence: true
   validates :time, presence: true
   validates :porsion, presence: true
