@@ -24,8 +24,8 @@ class Api::V1::RecipesController < ApplicationController
       params[:steps].each do |step|
         @recipe.steps.new do |st|
           st.step = step[:step]
-	  st.image = step[:image]
-   	  st.content = step[:content]
+	        st.image = step[:image]
+   	      st.content = step[:content]
         end
       end
       params[:recipes_ingredients].each do |ingredient|
@@ -39,7 +39,7 @@ class Api::V1::RecipesController < ApplicationController
         render json: @recipe, status: :created
       else
         render json: @recipe.errors, status: :unprocessable_entity
-    end
+      end
   end
 
   def update
@@ -62,7 +62,7 @@ class Api::V1::RecipesController < ApplicationController
     def recipe_params
       recipe = params.require(:recipe).permit(:title, :image, :summary, :time, :porsion, :complexity, :publish, :category_id)
       recipe[:sub_category_id] = params[:sub_category_id] unless (params[:sub_category_id]).to_i == 0
-      recipe[:country_id] = params[:country_id] unless (params[:country_id]).to_i ==0
+      recipe[:country_id] = params[:country_id] unless (params[:country_id]).to_i == 0
       recipe
     end
 
