@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   
   namespace :api, default: {format: :json} do 
     namespace :v1 do
-      resources :recipes
+      resources :recipes do
+        resources :comments, only: [:create, :index, :destroy]
+      end
       mount_devise_token_auth_for 'Admin', at: 'admin/auth'
       mount_devise_token_auth_for 'User', at: 'user/auth'
       resources :ingredients, only: [:index, :create]
