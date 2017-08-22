@@ -30,5 +30,11 @@ class Api::V1::CommentsController < ApplicationController
 
     def set_commentable_object
         @commentable = Recipe.find_by_id(params[:recipe_id]) if params[:recipe_id]
+        @commentable = Comment.find_by_id(params[:comment_id]) if params[:comment_id]
     end
+
+    def current_user
+        current_api_v1_user || current_api_v1_admin
+    end
+
 end

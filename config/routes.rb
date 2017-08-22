@@ -12,6 +12,9 @@ Rails.application.routes.draw do
       resources :categories, only: [:index, :show]
       resources :countries, only: [:index]
       resources :sub_categories, only: [:index]
+      resources :comments, only: [:destroy] do
+        resources :comments, only: [:create]
+      end
     end
   end
 end
