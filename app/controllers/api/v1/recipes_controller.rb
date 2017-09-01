@@ -8,19 +8,12 @@ class Api::V1::RecipesController < ApplicationController
   end
 
   def show
-    render json: @recipe
+    render json: @recipe, scope: current_user
   end
 
   def create
+      return unless current_user
       @recipe = Recipe.new recipe_params
-      if current_api_v1_user
-        @recipe.user_id = current_api_v1_user.id
-      elsif current_api_v1_admin
-        @recipe.admin_id = current_api_v1_admin.id
-        @recipe.user_type = 'admin'
-      else
-        return
-      end
       params[:steps].each do |step|
         @recipe.steps.new do |st|
           st.step = step[:step]
@@ -43,6 +36,7 @@ class Api::V1::RecipesController < ApplicationController
   end
 
   def update
+    return if !current_user || current_user.id != @recipe.user_id
     if @recipe.update(recipe_params)
       render json: @recipe
     else
@@ -51,6 +45,7 @@ class Api::V1::RecipesController < ApplicationController
   end
 
   def destroy
+    return if !current_user || current_user.id != @recipe.user_id
     @recipe.destroy
   end
 
@@ -63,6 +58,7 @@ class Api::V1::RecipesController < ApplicationController
       recipe = params.require(:recipe).permit(:title, :image, :summary, :time, :porsion, :complexity, :publish, :category_id)
       recipe[:sub_category_id] = params[:sub_category_id] unless (params[:sub_category_id]).to_i == 0
       recipe[:country_id] = params[:country_id] unless (params[:country_id]).to_i == 0
+      recipe[:user_id] = current_user.id
       recipe
     end
 

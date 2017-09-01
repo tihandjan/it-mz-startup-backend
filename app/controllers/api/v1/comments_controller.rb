@@ -3,13 +3,13 @@ class Api::V1::CommentsController < ApplicationController
 
     def index
         @comments = @commentable.comments.order(created_at: :desc)
-        render json: @comments
+        render json: @comments, scope: current_user
     end
 
     def create
         @comment = @commentable.comments.new comment_params
         if @comment.save
-            render json: @comment, status: :created
+            render json: @comment, scope: current_user, status: :created
         else
             render json: @comment.errors, status: :unprocessable_entity
         end
@@ -31,10 +31,6 @@ class Api::V1::CommentsController < ApplicationController
     def set_commentable_object
         @commentable = Recipe.find_by_id(params[:recipe_id]) if params[:recipe_id]
         @commentable = Comment.find_by_id(params[:comment_id]) if params[:comment_id]
-    end
-
-    def current_user
-        current_api_v1_user || current_api_v1_admin
     end
 
 end

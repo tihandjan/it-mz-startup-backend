@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170821203958) do
+ActiveRecord::Schema.define(version: 20170828191336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,6 +190,16 @@ ActiveRecord::Schema.define(version: 20170821203958) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
   end
 
+  create_table "votes", force: :cascade do |t|
+    t.string   "votable_type"
+    t.integer  "votable_id"
+    t.integer  "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["user_id"], name: "index_votes_on_user_id", using: :btree
+    t.index ["votable_type", "votable_id", "user_id"], name: "index_votes_on_votable_type_and_votable_id_and_user_id", unique: true, using: :btree
+  end
+
   add_foreign_key "recipes", "admins"
   add_foreign_key "recipes", "categories"
   add_foreign_key "recipes", "countries"
@@ -199,4 +209,5 @@ ActiveRecord::Schema.define(version: 20170821203958) do
   add_foreign_key "recipes_ingredients", "recipes"
   add_foreign_key "steps", "recipes"
   add_foreign_key "sub_categories", "categories"
+  add_foreign_key "votes", "users"
 end

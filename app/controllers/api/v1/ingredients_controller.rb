@@ -7,6 +7,7 @@ class Api::V1::IngredientsController < ApplicationController
   end
 
   def create
+    return unless current_user
     @ingredient = Ingredient.new ingredient_params
     if @ingredient.save
       render json: @ingredient, status: :created
