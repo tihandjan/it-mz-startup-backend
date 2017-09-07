@@ -9,6 +9,9 @@ Rails.application.routes.draw do
       resources :recipes do
         resources :comments, only: [:create, :index, :destroy]
         resources :votes, only: [:create]
+        collection do
+          get :by_condition
+        end
       end
       resources :ingredients, only: [:index, :create]
       resources :categories, only: [:index, :show]
