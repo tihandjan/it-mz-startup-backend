@@ -36,7 +36,7 @@ class Api::V1::RecipesController < ApplicationController
 
   def update
     return if !current_user || current_user.id != @recipe.user_id
-    if @recipe.update(recipe_params)
+    if @recipe.update(recipe_update_params)
       render json: @recipe
     else
       render json: @recipe.errors, status: :unprocessable_entity
@@ -65,6 +65,11 @@ class Api::V1::RecipesController < ApplicationController
       recipe[:country_id] = params[:country_id] unless (params[:country_id]).to_i == 0
       recipe[:user_id] = current_user.id
       recipe[:user_type] = current_user.class.name
+      recipe
+    end
+
+    def recipe_update_params
+      recipe = params.require(:recipe).permit(:title, :summary, :time, :porsion, :complexity, :publish, :image)
       recipe
     end
 
