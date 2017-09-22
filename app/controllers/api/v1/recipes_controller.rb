@@ -69,8 +69,7 @@ class Api::V1::RecipesController < ApplicationController
     end
 
     def recipe_update_params
-      recipe = params.require(:recipe).permit(:title, :summary, :time, :porsion, :complexity, :publish, :image)
-      recipe
+      params.require(:recipe).permit(:title, :summary, :time, :porsion, :complexity, :publish, :image, :category_id, :country_id, :sub_category_id)
     end
 
 end
