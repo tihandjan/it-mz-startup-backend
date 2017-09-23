@@ -4,4 +4,6 @@ class Step < ApplicationRecord
 
   validates :content, presence: true, length: {minimum: 5, maximum: 450}
   validates :step, presence: true
+
+  scope :asc_order, -> { order(step: :asc) }
 end

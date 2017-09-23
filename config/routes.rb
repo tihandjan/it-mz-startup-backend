@@ -14,7 +14,8 @@ Rails.application.routes.draw do
         end
       end
       resources :ingredients, only: [:index, :create]
-      resources :recipes_ingredients, only: [:destroy]
+      resources :recipes_ingredients, only: [:destroy, :create]
+      resources :steps, only: [:destroy, :create]
       resources :categories, only: [:index, :show]
       resources :countries, only: [:index]
       resources :sub_categories, only: [:index]

@@ -9,7 +9,7 @@ class Recipe < ApplicationRecord
   belongs_to :category
   belongs_to :sub_category
   belongs_to :country
-  has_many :steps, dependent: :destroy
+  has_many :steps, -> { asc_order }, dependent: :destroy
   has_many :recipes_ingredients, dependent: :destroy
   has_many :ingredients, through: :recipes_ingredients
   has_many :comments, as: :commentable, dependent: :destroy

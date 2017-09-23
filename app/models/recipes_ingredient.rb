@@ -9,6 +9,6 @@ class RecipesIngredient < ApplicationRecord
   private
  
   def validate_amount
-    errors[:amount] << "can't be 0" if amount <= 0 
+    errors[:amount] << "can't be 0" if amount.nil? || amount <= 0 
   end
 end
