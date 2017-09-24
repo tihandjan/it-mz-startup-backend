@@ -1,4 +1,5 @@
 class Recipe < ApplicationRecord
+  after_initialize :set_defaults, unless: :persisted?
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history, :finders]
   def should_generate_new_friendly_id?
@@ -28,5 +29,9 @@ class Recipe < ApplicationRecord
 
   def validate_complexity
     errors[:complexity] = 'Выберите уровень сложность' if complexity == 'Сложность готовки'
+  end
+
+  def set_defaults
+    self.publish ||= Time.current
   end
 end

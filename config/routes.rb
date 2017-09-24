@@ -12,6 +12,9 @@ Rails.application.routes.draw do
         collection do
           get :by_condition
         end
+        member do
+          put :approve
+        end
       end
       resources :ingredients, only: [:index, :create]
       resources :recipes_ingredients, only: [:destroy, :create]

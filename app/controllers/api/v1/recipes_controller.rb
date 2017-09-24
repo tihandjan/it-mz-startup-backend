@@ -1,5 +1,5 @@
 class Api::V1::RecipesController < ApplicationController
-  before_action :set_recipe, only: [:show, :update, :destroy]
+  before_action :set_recipe, only: [:show, :update, :destroy, :approve]
 
   def index
     @recipies = Recipe.order(created_at: :desc)
@@ -44,7 +44,7 @@ class Api::V1::RecipesController < ApplicationController
   end
 
   def destroy
-    return if !current_user || current_user.id != @recipe.user_id
+    return if !current_user
     @recipe.destroy
   end
 
@@ -52,6 +52,11 @@ class Api::V1::RecipesController < ApplicationController
     @recipes = Recipe.where("category_id = ?", params[:category_id]).order(created_at: :desc).first(4)
     @recipes = Recipe.order(created_at: :desc).first(4) unless @recipes.any?
     render json: @recipes, scope: current_user
+  end
+
+  def approve
+    @recipe.update(approved: !@recipe.approved)
+    render json: @recipe, status: 200
   end
 
   private
